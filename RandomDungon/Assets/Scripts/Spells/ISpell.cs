@@ -12,5 +12,5 @@ public interface ISpell {
     bool OnCoolDown { get; set; }
 
     void CastSpell();
-    void UpdateSpell();
+    IEnumerator UpdateSpell();
 }

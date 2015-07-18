@@ -24,8 +24,8 @@ public class InventoryManager : MonoBehaviour {
     }
 
     void Start() {
-//         for (int x = 0; x < 19; x++) 
-//           AddItem(GenerateRandomItem());
+         for (int x = 0; x < 19; x++) 
+           AddItem(GenerateRandomItem());
 
     }
 
@@ -39,7 +39,7 @@ public class InventoryManager : MonoBehaviour {
             newItem = new Weapon();
             newItem.name = weaponNames[Random.Range(0, weaponNames.Count)];
             newItem.maxDurability = Random.Range(50, 200);
-            newItem.stats = new Stats(Random.Range(0, 20 * Map.mapLevel), Random.Range(0, 20 * Map.mapLevel), Random.Range(0, 20 * Map.mapLevel), Random.Range(0, 20 * Map.mapLevel));
+            newItem.stats = new Stats(Random.Range(1, 20 * Map.mapLevel), Random.Range(1, 20 * Map.mapLevel), Random.Range(1, 20 * Map.mapLevel), Random.Range(1, 20 * Map.mapLevel));
             newItem.sprite = s.weaponSprites[Random.Range(0, s.weaponSprites.Count)];
 
             // Currently we only have Damage Upgrade
@@ -57,7 +57,7 @@ public class InventoryManager : MonoBehaviour {
             newItem = new Armor();
             newItem.name = armorNames[Random.Range(0, armorNames.Count)];
             newItem.maxDurability = Random.Range(50, 200);
-            newItem.stats = new Stats(Random.Range(0, 20 * Map.mapLevel), Random.Range(0, 20 * Map.mapLevel), Random.Range(0, 20 * Map.mapLevel), Random.Range(0, 20 * Map.mapLevel));
+            newItem.stats = new Stats(Random.Range(1, 20 * Map.mapLevel), Random.Range(1, 20 * Map.mapLevel), Random.Range(1, 20 * Map.mapLevel), Random.Range(1, 20 * Map.mapLevel));
             newItem.slot = (Armor.ArmorSlots)Random.Range(0, 4);
 
             // Assign a sprite that matches the armor type
@@ -114,13 +114,14 @@ public class InventoryManager : MonoBehaviour {
     public void EquipWeapon(Weapon item) {
         if (WeaponUpgradeSlot1 == null) {
             WeaponUpgradeSlot1 = item;
-
             uiManager.ChangeWeaponSlot("WeaponSlot1", item.sprite);
+            PlayerStats.instance.statModifiers.Add(item.stats);
             RemoveItemFromInventory(item);
         }
         else if (WeaponUpgradeSlot2 == null) {
             WeaponUpgradeSlot2 = item;
             uiManager.ChangeWeaponSlot("WeaponSlot2", item.sprite);
+            PlayerStats.instance.statModifiers.Add(item.stats);
             RemoveItemFromInventory(item);
         }
 
@@ -131,33 +132,43 @@ public class InventoryManager : MonoBehaviour {
 
     // Equip a armor piece
     public void EquipArmor(Armor item) {
+        PlayerStats.instance.statModifiers.Add(item.stats);
         if (item.slot == Armor.ArmorSlots.Chestpiece) {
-            if (Chest != null)
+            if (Chest != null) {
                 AddItem(Chest);
+                PlayerStats.instance.statModifiers.Remove(Chest.stats);
+            }
 
             Chest = item;
             uiManager.ChangeArmorSlot(Armor.ArmorSlots.Chestpiece, item.sprite);
             RemoveItemFromInventory(item);
         }
         else if (item.slot == Armor.ArmorSlots.Hands) {
-            if (Hands != null)
+            if (Hands != null) {
                 AddItem(Hands);
+                PlayerStats.instance.statModifiers.Remove(Hands.stats);
+
+            }
 
             Hands = item;
             uiManager.ChangeArmorSlot(Armor.ArmorSlots.Hands, item.sprite);
             RemoveItemFromInventory(item);
         }
         else if (item.slot == Armor.ArmorSlots.Legs) {
-            if (Legs != null)
+            if (Legs != null) {
                 AddItem(Legs);
+                PlayerStats.instance.statModifiers.Remove(Legs.stats);
+            }
 
             Legs = item;
             uiManager.ChangeArmorSlot(Armor.ArmorSlots.Legs, item.sprite);
             RemoveItemFromInventory(item);
         }
         else if (item.slot == Armor.ArmorSlots.Headguard) {
-            if (Head != null)
+            if (Head != null) {
                 AddItem(Head);
+                PlayerStats.instance.statModifiers.Remove(Head.stats);
+            }
 
             Head = item;
             uiManager.ChangeArmorSlot(Armor.ArmorSlots.Headguard, item.sprite);
@@ -169,25 +180,31 @@ public class InventoryManager : MonoBehaviour {
     public void EquipmentClicked(string type) {
         if (type == "Head" && Head != null) {
             AddItem(Head);
+            PlayerStats.instance.statModifiers.Remove(Head.stats);
             Head = null;
         }
         else if (type == "Chest" && Chest != null) {
+            PlayerStats.instance.statModifiers.Remove(Chest.stats);
             AddItem(Chest);
             Chest = null;
         }
         else if (type == "Legs" && Legs != null) {
+            PlayerStats.instance.statModifiers.Remove(Legs.stats);
             AddItem(Legs);
             Legs = null;
         }
         else if (type == "Hands" && Hands != null) {
+            PlayerStats.instance.statModifiers.Remove(Hands.stats);
             AddItem(Hands);
             Hands = null;
         }
         else if (type == "WeaponSlot1" && WeaponUpgradeSlot1 != null) {
+            PlayerStats.instance.statModifiers.Remove(WeaponUpgradeSlot1.stats);
             AddItem(WeaponUpgradeSlot1);
             WeaponUpgradeSlot1 = null;
         }
         else if (type == "WeaponSlot2" && WeaponUpgradeSlot2 != null) {
+            PlayerStats.instance.statModifiers.Remove(WeaponUpgradeSlot2.stats);
             AddItem(WeaponUpgradeSlot2);
             WeaponUpgradeSlot2 = null;
         }

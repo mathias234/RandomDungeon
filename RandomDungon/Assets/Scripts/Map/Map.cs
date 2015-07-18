@@ -18,7 +18,7 @@ public class Map : MonoBehaviour {
 
     public static bool regenerate;
 
-    public static int mapLevel;
+    public static int mapLevel = 1;
 
     void Start() {
         regenerate = true;

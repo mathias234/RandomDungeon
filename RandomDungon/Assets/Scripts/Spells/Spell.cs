@@ -24,14 +24,38 @@ public class Spell : ISpell {
     }
 
     public void CastSpell() {
-        throw new NotImplementedException();
+        if (this is Bolt) {
+            // Do something
+            Bolt bolt = (Bolt)this;
+        }
+        else if (this is Buff) {
+            // Do Something
+            Buff buff = (Buff)this;
+        }
+        else if (this is Spell) {
+            // it shouldnt come to this.
+        }
     }
 
     /// <summary>
     /// Used to keep track of the spell after its been cast counting down spell cooldowns and such
     /// </summary>
-    public void UpdateSpell() {
-        throw new NotImplementedException();
+    public IEnumerator UpdateSpell() {
+        while (true) {
+            if (this is Bolt) {
+                // Do something
+                Bolt bolt = (Bolt)this;
+
+            }
+            else if (this is Buff) {
+                // Do Something
+                Buff buff = (Buff)this;
+            }
+            else if (this is Spell) {
+                // it shouldnt come to this.
+            }
+            yield return new WaitForSeconds(0);
+        }
     }
 
     public string Name {

@@ -12,8 +12,8 @@ public class SpellGenerator : MonoBehaviour{
         firebolt.Range = 20;
 
         if (firebolt is Bolt) {
-            Debug.Log("This is a bolt, with the name " + firebolt.Name + ",  " + firebolt.Description);
             firebolt.CastSpell();
+            StartCoroutine(firebolt.UpdateSpell());
         }
     }
 }
