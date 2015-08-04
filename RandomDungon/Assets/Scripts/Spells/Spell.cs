@@ -8,6 +8,9 @@ public class Spell : ISpell {
     private GameObject _effect;
     private bool _lineOfSight;
 
+    private float _baseLifeTime;
+    private float _lifeTime;
+
     private float _baseCoolDownTime;
     private float _coolDownTimer;
     private bool _onCoolDown;
@@ -24,9 +27,11 @@ public class Spell : ISpell {
     }
 
     public void CastSpell() {
+        LifeTime = BaseLifeTime;
         if (this is Bolt) {
             // Do something
             Bolt bolt = (Bolt)this;
+            Debug.Log("Casting Bolt: " + bolt.Name);
         }
         else if (this is Buff) {
             // Do Something
@@ -42,10 +47,16 @@ public class Spell : ISpell {
     /// </summary>
     public IEnumerator UpdateSpell() {
         while (true) {
+            if (LifeTime <= 0) {
+                yield break;
+            }
+
+            LifeTime -= Time.deltaTime;
+
             if (this is Bolt) {
                 // Do something
                 Bolt bolt = (Bolt)this;
-
+                Debug.Log("Updating Bolt: " + bolt.Name);
             }
             else if (this is Buff) {
                 // Do Something
@@ -127,4 +138,25 @@ public class Spell : ISpell {
             _onCoolDown = value;
         }
     }
+
+    public float BaseLifeTime {
+        get {
+            return _baseLifeTime;
+        }
+
+        set {
+            _baseLifeTime = value;
+        }
+    }
+
+    public float LifeTime {
+        get {
+            return _lifeTime;
+        }
+
+        set {
+            _lifeTime = value;
+        }
+    }
+
 }

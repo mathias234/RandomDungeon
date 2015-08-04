@@ -7,6 +7,9 @@ public interface ISpell {
     GameObject Effect { get; set; }
     bool LineOfSight { get; set; }
 
+    float BaseLifeTime { get; set; }
+    float LifeTime { get; set; }
+
     float BaseCoolDownTime { get; set; }
     float CoolDownTimer { get; set; }
     bool OnCoolDown { get; set; }
