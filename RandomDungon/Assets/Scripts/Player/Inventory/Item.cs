@@ -1,4 +1,5 @@
-﻿public class Item {
+﻿[System.Serializable]
+public class Item {
     public string name;
     public int maxDurability;
     public int durability;
@@ -7,8 +8,7 @@
 
     public UnityEngine.Sprite sprite;
 
-    // This variable is when the item is in the inventory 
-    public int inventorySlot = 0;
+
     public Item (){
         this.name = "NoName";
         this.maxDurability = 100;

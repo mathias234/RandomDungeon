@@ -1,4 +1,5 @@
-﻿public class Stats {
+﻿[System.Serializable]
+public class Stats {
     public int stamina;
     public int strength;
     public int intellect;

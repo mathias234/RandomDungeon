@@ -11,18 +11,7 @@ public class Loot : MonoBehaviour {
 
     void OnTriggerEnter(Collider other) {
         if (other.tag == "Player") {
-
-            int i = 0;
-
-            for (int j = 0; j < UIManager.instance.InventorySlots.Count; j++) {
-                Image invIcon = UIManager.instance.InventorySlots[j].FindChild("Foreground").GetComponent<Image>();
-                if (invIcon.sprite == null) {
-                    i = j;
-                    break;
-                }
-            }
-
-            InventoryManager.instance.AddItem(item, i);
+            InventoryManager.instance.AddItem(item);
             Destroy(gameObject);
         }
     }

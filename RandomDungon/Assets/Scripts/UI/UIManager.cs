@@ -10,8 +10,6 @@ public class UIManager : MonoBehaviour {
     public Text itemInfo;
     public RigidbodyFirstPersonController controller;
 
-    public List<RectTransform> InventorySlots = new List<RectTransform>();
-
     public RectTransform WeaponUpgradeSlot1;
     public RectTransform WeaponUpgradeSlot2;
     public RectTransform Head;
@@ -19,10 +17,7 @@ public class UIManager : MonoBehaviour {
     public RectTransform Legs;
     public RectTransform Hands;
 
-
-
     public static UIManager instance;
-
 
     public void Awake() {
         instance = this;
@@ -36,12 +31,7 @@ public class UIManager : MonoBehaviour {
         HandleKeypress();
     }
 
-    public void ClearItemText() {
-        itemInfo.text = "";
-    }
-
     void SetupPlayerUI() {
-        itemInfo = GameObject.Find("ItemInfoText").GetComponent<Text>();
         corsair = GameObject.Find("Corsair");
         playerPanel = GameObject.Find("PlayerPanel");
         controller = gameObject.GetComponent<RigidbodyFirstPersonController>();
@@ -71,15 +61,6 @@ public class UIManager : MonoBehaviour {
 
             }
         }
-    }
-
-    public void SetItemInfo(string text) {
-        itemInfo.text = text;
-    }
-
-    public void ChangeInventorySlotIcon(int invSlot, Sprite sprite) {
-        Image invIcon = InventorySlots[invSlot].FindChild("Foreground").GetComponent<Image>();
-        invIcon.sprite = sprite;
     }
 
     public void ChangeArmorSlot(Armor.ArmorSlots slot, Sprite sprite) {

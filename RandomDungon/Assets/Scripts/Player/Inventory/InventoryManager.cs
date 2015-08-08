@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+
+// This class is big.. should maybe be split up?
 public class InventoryManager : MonoBehaviour {
     public List<Item> inventory = new List<Item>();
 
@@ -17,6 +19,9 @@ public class InventoryManager : MonoBehaviour {
 
     public static InventoryManager instance;
 
+    public GameObject itemButton;
+    public Transform contentPanel;
+
     void Awake() {
         instance = this;
         uiManager = GetComponent<UIManager>();
@@ -24,9 +29,10 @@ public class InventoryManager : MonoBehaviour {
     }
 
     void Start() {
-         for (int x = 0; x < 19; x++) 
-           AddItem(GenerateRandomItem());
+        for (int x = 0; x < 19; x++)
+            AddItem(GenerateRandomItem());
 
+        DrawInventory();
     }
 
     // Generate a random item.
@@ -81,27 +87,22 @@ public class InventoryManager : MonoBehaviour {
         return new Item();
     }
 
-    // This should be renamed to something like EquipItem(int id)
-    // This function is called by the UI when someone tries to equip a item
-    // It will figure out  what item is in that UI slot, if we can equip the item, then what type of item(weapon or armor) 
-    // then call the appropriate function to equip the item
-    public void ItemPressed(int id) {
-        UIManager.instance.ClearItemText();
-        for (int i = 0; i < inventory.Count; i++) {
-            if (inventory[i].inventorySlot == id) {
-                if (CanEquipItem(inventory[i]) == false)
-                    return;
+    /// <summary>
+    /// Equip the item
+    /// </summary>
+    /// <param name="item"> the item you want to equip</param>
+    public void EquipItem(Item item) {
+        if (CanEquipItem(item) == false)
+            return;
 
-                if (inventory[i].GetType() == typeof(Weapon)) {
-                    Weapon item = (Weapon)inventory[i];
-                    EquipWeapon(item);
-                }
+        if (item is Weapon) {
+            Weapon weapon = (Weapon)item;
+            EquipWeapon(weapon);
+        }
 
-                else if (inventory[i].GetType() == typeof(Armor)) {
-                    Armor item = (Armor)inventory[i];
-                    EquipArmor(item);
-                }
-            }
+        else if (item is Armor) {
+            Armor armor = (Armor)item;
+            EquipArmor(armor);
         }
     }
 
@@ -128,6 +129,7 @@ public class InventoryManager : MonoBehaviour {
         else if (WeaponUpgradeSlot1 != null && WeaponUpgradeSlot2 != null) {
 
         }
+        DrawInventory();
     }
 
     // Equip a armor piece
@@ -174,9 +176,13 @@ public class InventoryManager : MonoBehaviour {
             uiManager.ChangeArmorSlot(Armor.ArmorSlots.Headguard, item.sprite);
             RemoveItemFromInventory(item);
         }
-}
+        DrawInventory();
+    }
 
-    // clear this spot and add it to the inventory
+    /// <summary>
+    /// clear this spot and add it to the inventory
+    /// </summary>
+    /// <param name="type">Slot type: Head, Chest, Hands, Legs, WeaponSlot1, WeaponSlot2</param>
     public void EquipmentClicked(string type) {
         if (type == "Head" && Head != null) {
             AddItem(Head);
@@ -208,11 +214,12 @@ public class InventoryManager : MonoBehaviour {
             AddItem(WeaponUpgradeSlot2);
             WeaponUpgradeSlot2 = null;
         }
+        DrawInventory();
         UIManager.instance.ClearEquipmentSlot(type);
 
     }
 
-    public void ItemHover(int id) {
+    /* public void ItemHover(int id) {
         for (int i = 0; i < inventory.Count; i++) {
             if (inventory[i].inventorySlot == id) {
                 if (inventory[i].GetType() == typeof(Weapon)) {
@@ -240,52 +247,54 @@ public class InventoryManager : MonoBehaviour {
 
             }
         }
-    }
+    }*/
 
-    public void AddItem(Item item, int invSlot) {
-        item.inventorySlot = invSlot;
-        inventory.Add(item);
-        if (uiManager == null) {
-            Debug.Log("Unable to find the ui manager");
-            return;
-        }
-        uiManager.ChangeInventorySlotIcon(invSlot, item.sprite);
-
-    }
     public void AddItem(Item item) {
-        int i = 0;
+        //item.inventorySlot = invSlot;
+        inventory.Add(item);
 
-        for (int j = 0; j < UIManager.instance.InventorySlots.Count; j++) {
-            UnityEngine.UI.Image invIcon = UIManager.instance.InventorySlots[j].FindChild("Foreground").GetComponent<UnityEngine.UI.Image>();
-            if (invIcon.sprite == null) {
-                i = j;
-                break;
-            }
-        }
-        AddItem(item, i);
-
+        // Redraw the inventory
+        DrawInventory();
     }
 
-    // remove the item from the inventory. BE CARFULL THIS WILL DESTORY THE ITEM
-    void RemoveItemFromInventory(Item item) {
+    public void RemoveItemFromInventory(Item item) {
         inventory.Remove(item);
-        UIManager uiManager = GetComponent<UIManager>();
-        if (uiManager == null) {
-            Debug.Log("Unable to find the ui manager");
-            return;
-        }
-        uiManager.ChangeInventorySlotIcon(item.inventorySlot, new Sprite());
+        DrawInventory();
+    }
 
+    void PopulateInventory() {
+        foreach (var item in inventory) {
+            GameObject newButton = Instantiate(itemButton) as GameObject;
+            ItemButton button = newButton.GetComponent<ItemButton>();
+            button.item = item;
+            button.nameLable.text = item.name.ToString();
+            button.durability.text = "Durability: " + item.durability.ToString() + " / " + item.maxDurability.ToString();
+            button.icon.sprite = item.sprite;
+            button.button.onClick.AddListener(() => EquipItem(button.item));
+            newButton.transform.SetParent(contentPanel);
+        }
+    }
+
+    /// <summary>
+    /// This will "Re" Draw the inventroy should be called fairly often incase something happens
+    /// </summary>
+    public void DrawInventory() {
+        // Might not be the most optimized way to do this but it will look instant and its easy
+        foreach (Transform inventoryItem in contentPanel.transform) {
+            Destroy(inventoryItem.gameObject);
+        }
+
+        PopulateInventory();
     }
 }
 
 /* example on how the create a item and how to see it
         Item item = InventoryManager.instance.GenerateRandomItem();
-        if (item.GetType() == typeof(Weapon)) {
+        if (item is Weapon)) {
             Weapon item2 = (Weapon)item;
             Debug.Log("Weapon: " + item.name + " " + item2.slot);
         }
-        else if (item.GetType() == typeof(Armor)) {
+        else if (item is Armor) {
             Armor item2 = (Armor)item;
             Debug.Log("Armor: " + item2.slot + " " + item.name);
         }
