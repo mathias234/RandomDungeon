@@ -93,6 +93,9 @@ public class UIManager : MonoBehaviour {
         }
     }
 
+    public void SetItemInfo(string text) {
+        itemInfo.text = text;
+    }
     // clear this spot and add it to the inventory
     public void ClearEquipmentSlot(string type) {
         if (type == "Head") {

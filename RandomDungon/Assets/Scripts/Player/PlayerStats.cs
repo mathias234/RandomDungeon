@@ -16,15 +16,21 @@ public class PlayerStats : MonoBehaviour {
     public RectTransform health;
     public RectTransform mana;
 
-    public int baseMaxHealth;
-    private int maxHealth;
-    public int currentHealth;
+    public float baseMaxHealth;
+    [SerializeField]
+    private float maxHealth;
+    public float currentHealth;
 
-    public int baseMaxMana;
-    [SerializeField] private int maxMana;
-    public int currentMana;
+    public float baseMaxMana;
+    [SerializeField]
+    private float maxMana;
+    public float currentMana;
 
     private GameObject PlayerInfo;
+
+    public bool inCombat = false;
+
+    public float regenAmount = 1.0f;       // The amount of health/mana you gain every secound
 
     public static PlayerStats instance;
 
@@ -43,6 +49,16 @@ public class PlayerStats : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        if (currentHealth < maxHealth) {
+            //Regen health
+            currentHealth += regenAmount * Time.deltaTime;
+        }
+
+        if (currentMana < maxMana) {
+            //Regen mana
+            currentMana += regenAmount * Time.deltaTime;
+        }
+
         maxHealth = baseMaxHealth + GetStats().stamina;
         maxMana = baseMaxMana + GetStats().intellect;
 
@@ -65,7 +81,7 @@ public class PlayerStats : MonoBehaviour {
         Stats newStats = new Stats(BaseStats.stamina, BaseStats.strength, BaseStats.agility, BaseStats.intellect);
 
         // calculate the new stats based to the base stats and the stat modifiers
-        for(int x = 0; x < statModifiers.Count; x++) {
+        for (int x = 0; x < statModifiers.Count; x++) {
             newStats.stamina += statModifiers[x].stamina;
             newStats.strength += statModifiers[x].strength;
             newStats.intellect += statModifiers[x].intellect;

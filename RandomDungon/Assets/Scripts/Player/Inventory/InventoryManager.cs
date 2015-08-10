@@ -22,6 +22,9 @@ public class InventoryManager : MonoBehaviour {
     public GameObject itemButton;
     public Transform contentPanel;
 
+    public float currentWeight;
+    public float maxWeight = 10;
+
     void Awake() {
         instance = this;
         uiManager = GetComponent<UIManager>();
@@ -29,10 +32,19 @@ public class InventoryManager : MonoBehaviour {
     }
 
     void Start() {
-        for (int x = 0; x < 19; x++)
+        for (int x = 0; x < 5; x++)
             AddItem(GenerateRandomItem());
 
         DrawInventory();
+    }
+
+    void Update() {
+        currentWeight = 0;
+        foreach (var i in inventory) {
+            currentWeight += i.weight;
+        }
+        if (currentWeight >= maxWeight) {
+        }
     }
 
     // Generate a random item.
@@ -45,7 +57,9 @@ public class InventoryManager : MonoBehaviour {
             newItem = new Weapon();
             newItem.name = weaponNames[Random.Range(0, weaponNames.Count)];
             newItem.maxDurability = Random.Range(50, 200);
+            newItem.durability = newItem.maxDurability;
             newItem.stats = new Stats(Random.Range(1, 20 * Map.mapLevel), Random.Range(1, 20 * Map.mapLevel), Random.Range(1, 20 * Map.mapLevel), Random.Range(1, 20 * Map.mapLevel));
+            newItem.weight = Random.Range(0.5f, 2.5f);
             newItem.sprite = s.weaponSprites[Random.Range(0, s.weaponSprites.Count)];
 
             // Currently we only have Damage Upgrade
@@ -219,35 +233,31 @@ public class InventoryManager : MonoBehaviour {
 
     }
 
-    /* public void ItemHover(int id) {
-        for (int i = 0; i < inventory.Count; i++) {
-            if (inventory[i].inventorySlot == id) {
-                if (inventory[i].GetType() == typeof(Weapon)) {
-                    Weapon item = (Weapon)inventory[i];
-                    uiManager.SetItemInfo(
-                            "<b><i>" + item.name + "</i></b>      " +
-                            item.slot + "\n" +
-                            "DamageMultiplier: " + item.DamageMultiplier.ToString() + "\n" +
-                            "Stamina: " + item.stats.stamina.ToString() + "\n" +
-                            "Strength: " + item.stats.strength.ToString() + "\n" +
-                            "Intelligence: " + item.stats.intellect.ToString() + "\n" +
-                            "Agility: " + item.stats.agility.ToString()
-                        );
-                }
-                else if (inventory[i].GetType() == typeof(Armor)) {
-                    Armor item = (Armor)inventory[i];
-                    uiManager.SetItemInfo(
-                            "<b><i>" + item.slot + " " + item.name + "</i></b>\n" +
-                            "Stamina: " + item.stats.stamina.ToString() + "\n" +
-                            "Strength: " + item.stats.strength.ToString() + "\n" +
-                            "Intelligence: " + item.stats.intellect.ToString() + "\n" +
-                            "Agility: " + item.stats.agility.ToString()
-                        );
-                }
-
-            }
+    public void ShowTooltip(Item item) {
+        if (item.GetType() == typeof(Weapon)) {
+            Weapon weapon = (Weapon)item;
+            uiManager.SetItemInfo(
+                    "<b><i>" + weapon.name + "</i></b>      " +
+                    weapon.slot + "\n" +
+                    "DamageMultiplier: " + weapon.DamageMultiplier.ToString() + "\n" +
+                    "Stamina: " + weapon.stats.stamina.ToString() + "\n" +
+                    "Strength: " + weapon.stats.strength.ToString() + "\n" +
+                    "Intelligence: " + weapon.stats.intellect.ToString() + "\n" +
+                    "Agility: " + weapon.stats.agility.ToString()
+                );
         }
-    }*/
+        else if (item.GetType() == typeof(Armor)) {
+            Armor armor = (Armor)item;
+            uiManager.SetItemInfo(
+                    "<b><i>" + armor.slot + " " + item.name + "</i></b>\n" +
+                    "Stamina: " + armor.stats.stamina.ToString() + "\n" +
+                    "Strength: " + armor.stats.strength.ToString() + "\n" +
+                    "Intelligence: " + armor.stats.intellect.ToString() + "\n" +
+                    "Agility: " + armor.stats.agility.ToString()
+                );
+        }
+
+    }
 
     public void AddItem(Item item) {
         //item.inventorySlot = invSlot;
@@ -270,7 +280,6 @@ public class InventoryManager : MonoBehaviour {
             button.nameLable.text = item.name.ToString();
             button.durability.text = "Durability: " + item.durability.ToString() + " / " + item.maxDurability.ToString();
             button.icon.sprite = item.sprite;
-            button.button.onClick.AddListener(() => EquipItem(button.item));
             newButton.transform.SetParent(contentPanel);
         }
     }

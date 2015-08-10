@@ -8,9 +8,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 416192}
-  - 33: {fileID: 3364404}
   - 135: {fileID: 13586078}
-  - 23: {fileID: 2393488}
   - 114: {fileID: 11484076}
   m_Layer: 0
   m_Name: LootObj
@@ -31,37 +29,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!23 &2393488
-MeshRenderer:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 171660}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 1
-  m_ReflectionProbeUsage: 1
-  m_ProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 1
-  m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
---- !u!33 &3364404
-MeshFilter:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 171660}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &11484076
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -73,6 +40,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e94f8be20b624ef40b90fb18ca5a6389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  item:
+    name: NoName
+    maxDurability: 100
+    durability: 100
+    stats:
+      stamina: 0
+      strength: 0
+      intellect: 0
+      agility: 0
+    sprite: {fileID: 0}
 --- !u!135 &13586078
 SphereCollider:
   m_ObjectHideFlags: 1

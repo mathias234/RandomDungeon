@@ -11,7 +11,7 @@ GameObject:
   - 222: {fileID: 22239988}
   - 114: {fileID: 11422202}
   m_Layer: 5
-  m_Name: Type
+  m_Name: Durability
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -143,6 +143,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44f509ade500d884a83992f3f1d73a25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  item:
+    name: NoName
+    maxDurability: 100
+    durability: 100
+    stats:
+      stamina: 0
+      strength: 0
+      intellect: 0
+      agility: 0
+    sprite: {fileID: 0}
   button: {fileID: 11470330}
   nameLable: {fileID: 11477622}
   icon: {fileID: 11484772}
@@ -393,7 +403,7 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: 1, y: .5}
   m_AnchorMax: {x: 1, y: .5}
-  m_AnchoredPosition: {x: -80.5, y: -3.79999995}
+  m_AnchoredPosition: {x: -80.5, y: .300000012}
   m_SizeDelta: {x: 153.399994, y: 16.7999992}
   m_Pivot: {x: .5, y: .5}
 --- !u!1001 &100100000
