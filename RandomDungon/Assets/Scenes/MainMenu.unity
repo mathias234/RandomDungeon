@@ -5407,18 +5407,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3a0522bad5ad8047b60738d086ae62f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1190885081
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1190885079}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7171253ec38e71545a27a5bb45302c47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selectedSpell: 0
 --- !u!1001 &1191962309
 Prefab:
   m_ObjectHideFlags: 0
@@ -7371,6 +7359,10 @@ Prefab:
     - target: {fileID: 22453610, guid: 70bd342f18875c240a728c51465155ed, type: 2}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 113184, guid: 70bd342f18875c240a728c51465155ed, type: 2}
+      propertyPath: m_Name
+      value: Crosshair
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 70bd342f18875c240a728c51465155ed, type: 2}

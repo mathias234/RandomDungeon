@@ -195,7 +195,7 @@ GameObject:
   - 114: {fileID: 11451740}
   m_Layer: 10
   m_Name: CaveMonster
-  m_TagString: Player
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1898,6 +1898,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: _minDistance
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

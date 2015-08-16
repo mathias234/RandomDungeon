@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public interface IBolt : ISpell {
+﻿public interface IBolt : ISpell {
     float DamageValue { get; set; }
     float DamageVariance { get; set; }
     float Range { get; set; }

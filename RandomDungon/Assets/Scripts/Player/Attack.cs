@@ -14,6 +14,9 @@ public class Attack : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (PlayerStats.instance.inMenu == true)
+            return;
+
 		if(weapon == null) {
 			weapon = gameObject.GetComponentInChildren<IWeapon>();
 			return;

@@ -147,6 +147,7 @@ MonoBehaviour:
     name: NoName
     maxDurability: 100
     durability: 100
+    weight: 0
     stats:
       stamina: 0
       strength: 0
@@ -239,7 +240,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
-    m_Alignment: 4
+    m_Alignment: 3
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
@@ -386,8 +387,8 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 1, y: .5}
   m_AnchorMax: {x: 1, y: .5}
-  m_AnchoredPosition: {x: -79.4750519, y: 20.6000004}
-  m_SizeDelta: {x: 158.899994, y: 23.7999992}
+  m_AnchoredPosition: {x: -135.25, y: 18.2999878}
+  m_SizeDelta: {x: 270.5, y: 24}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22485252
 RectTransform:
@@ -403,7 +404,7 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: 1, y: .5}
   m_AnchorMax: {x: 1, y: .5}
-  m_AnchoredPosition: {x: -80.5, y: .300000012}
+  m_AnchoredPosition: {x: -187, y: 0}
   m_SizeDelta: {x: 153.399994, y: 16.7999992}
   m_Pivot: {x: .5, y: .5}
 --- !u!1001 &100100000

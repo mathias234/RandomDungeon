@@ -5,13 +5,13 @@ using UnityEngine.UI;
 using UnityStandardAssets.Characters.FirstPerson;
 
 public class UIManager : MonoBehaviour {
-    public GameObject corsair;
+    public GameObject crosshair;
     public GameObject playerPanel;
     public Text itemInfo;
     public RigidbodyFirstPersonController controller;
 
-    public RectTransform WeaponUpgradeSlot1;
-    public RectTransform WeaponUpgradeSlot2;
+    public RectTransform Upgrade1;
+    public RectTransform Upgrade2;
     public RectTransform Head;
     public RectTransform Chest;
     public RectTransform Legs;
@@ -32,13 +32,13 @@ public class UIManager : MonoBehaviour {
     }
 
     void SetupPlayerUI() {
-        corsair = GameObject.Find("Corsair");
+        crosshair = GameObject.Find("Crosshair");
         playerPanel = GameObject.Find("PlayerPanel");
         controller = gameObject.GetComponent<RigidbodyFirstPersonController>();
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = false;
-        corsair.SetActive(true);
+        crosshair.SetActive(true);
         playerPanel.SetActive(false);
         controller.enabled = true;
     }
@@ -48,17 +48,18 @@ public class UIManager : MonoBehaviour {
             if (Cursor.lockState == CursorLockMode.None) {
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
-                corsair.SetActive(true);
+                crosshair.SetActive(true);
                 playerPanel.SetActive(false);
                 controller.enabled = true;
+                PlayerStats.instance.inMenu = false;
             }
             else {
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
-                corsair.SetActive(false);
+                crosshair.SetActive(false);
                 playerPanel.SetActive(true);
                 controller.enabled = false;
-
+                PlayerStats.instance.inMenu = true;
             }
         }
     }
@@ -84,11 +85,11 @@ public class UIManager : MonoBehaviour {
 
     public void ChangeWeaponSlot(String slot, Sprite sprite) {
         if (slot == "WeaponSlot1") {
-            Image invIcon = WeaponUpgradeSlot1.FindChild("Foreground").GetComponent<Image>();
+            Image invIcon = Upgrade1.FindChild("Foreground").GetComponent<Image>();
             invIcon.sprite = sprite;
         }
         else if (slot == "WeaponSlot2") {
-            Image invIcon = WeaponUpgradeSlot2.FindChild("Foreground").GetComponent<Image>();
+            Image invIcon = Upgrade2.FindChild("Foreground").GetComponent<Image>();
             invIcon.sprite = sprite;
         }
     }
@@ -97,24 +98,24 @@ public class UIManager : MonoBehaviour {
         itemInfo.text = text;
     }
     // clear this spot and add it to the inventory
-    public void ClearEquipmentSlot(string type) {
-        if (type == "Head") {
+    public void ClearEquipmentSlot(EquipmentType type) {
+        if (type == EquipmentType.Head) {
             Head.FindChild("Foreground").GetComponent<Image>().sprite = new Sprite();
         }
-        else if (type == "Chest") {
+        else if (type == EquipmentType.Chest) {
             Chest.FindChild("Foreground").GetComponent<Image>().sprite = new Sprite();
         }
-        else if (type == "Legs") {
+        else if (type == EquipmentType.Legs) {
             Legs.FindChild("Foreground").GetComponent<Image>().sprite = new Sprite();
         }
-        else if (type == "Hands") {
+        else if (type == EquipmentType.Hands) {
             Hands.FindChild("Foreground").GetComponent<Image>().sprite = new Sprite();
         }
-        else if (type == "WeaponSlot1") {
-            WeaponUpgradeSlot1.FindChild("Foreground").GetComponent<Image>().sprite = new Sprite();
+        else if (type == EquipmentType.Upgrade1) {
+            Upgrade1.FindChild("Foreground").GetComponent<Image>().sprite = new Sprite();
         }
-        else if (type == "WeaponSlot2") {
-            WeaponUpgradeSlot2.FindChild("Foreground").GetComponent<Image>().sprite = new Sprite();
+        else if (type == EquipmentType.Upgrade2) {
+            Upgrade2.FindChild("Foreground").GetComponent<Image>().sprite = new Sprite();
         }
 
     }

@@ -1,7 +1,6 @@
-﻿using UnityEngine;
-using System.Collections;
-using System;
+﻿using System;
 
+[Serializable]
 public class Bolt : Spell, IBolt {
     float _damageValue;
     float _damageVariance;

@@ -29,6 +29,7 @@ public class PlayerStats : MonoBehaviour {
     private GameObject PlayerInfo;
 
     public bool inCombat = false;
+    public bool inMenu = false;
 
     public float regenAmount = 1.0f;       // The amount of health/mana you gain every secound
 

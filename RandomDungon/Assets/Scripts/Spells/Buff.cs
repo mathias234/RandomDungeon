@@ -1,7 +1,6 @@
-﻿using UnityEngine;
-using System.Collections;
-using System;
+﻿using System;
 
+[Serializable]
 public class Buff : Spell, IBuff {
     private int _buffValue;
     private float _baseBuffDuration;

@@ -11,10 +11,10 @@ public class Gun : MonoBehaviour, IWeapon {
         // Base Damage
         damage = 15f;
 
-        if (InventoryManager.instance.WeaponUpgradeSlot1 != null)
-            damage *= (InventoryManager.instance.WeaponUpgradeSlot1.DamageMultiplier);
-        if(InventoryManager.instance.WeaponUpgradeSlot2 != null)
-            damage *= (InventoryManager.instance.WeaponUpgradeSlot2.DamageMultiplier);
+        if (InventoryManager.instance.Upgrade1 != null)
+            damage *= (InventoryManager.instance.Upgrade1.DamageMultiplier);
+        if(InventoryManager.instance.Upgrade2 != null)
+            damage *= (InventoryManager.instance.Upgrade2.DamageMultiplier);
 
     }
 

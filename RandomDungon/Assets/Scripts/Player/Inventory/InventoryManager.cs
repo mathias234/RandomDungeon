@@ -5,8 +5,8 @@ using System.Collections.Generic;
 public class InventoryManager : MonoBehaviour {
     public List<Item> inventory = new List<Item>();
 
-    public Weapon WeaponUpgradeSlot1;
-    public Weapon WeaponUpgradeSlot2;
+    public Weapon Upgrade1;
+    public Weapon Upgrade2;
     public Armor Head;
     public Armor Chest;
     public Armor Legs;
@@ -32,7 +32,7 @@ public class InventoryManager : MonoBehaviour {
     }
 
     void Start() {
-        for (int x = 0; x < 5; x++)
+        for (int x = 0; x < 25; x++)
             AddItem(GenerateRandomItem());
 
         DrawInventory();
@@ -127,20 +127,20 @@ public class InventoryManager : MonoBehaviour {
 
     // Equip a weapon
     public void EquipWeapon(Weapon item) {
-        if (WeaponUpgradeSlot1 == null) {
-            WeaponUpgradeSlot1 = item;
+        if (Upgrade1 == null) {
+            Upgrade1 = item;
             uiManager.ChangeWeaponSlot("WeaponSlot1", item.sprite);
             PlayerStats.instance.statModifiers.Add(item.stats);
             RemoveItemFromInventory(item);
         }
-        else if (WeaponUpgradeSlot2 == null) {
-            WeaponUpgradeSlot2 = item;
+        else if (Upgrade2 == null) {
+            Upgrade2 = item;
             uiManager.ChangeWeaponSlot("WeaponSlot2", item.sprite);
             PlayerStats.instance.statModifiers.Add(item.stats);
             RemoveItemFromInventory(item);
         }
 
-        else if (WeaponUpgradeSlot1 != null && WeaponUpgradeSlot2 != null) {
+        else if (Upgrade1 != null && Upgrade2 != null) {
 
         }
         DrawInventory();
@@ -197,36 +197,36 @@ public class InventoryManager : MonoBehaviour {
     /// clear this spot and add it to the inventory
     /// </summary>
     /// <param name="type">Slot type: Head, Chest, Hands, Legs, WeaponSlot1, WeaponSlot2</param>
-    public void EquipmentClicked(string type) {
-        if (type == "Head" && Head != null) {
+    public void EquipmentClicked(EquipmentType type) {
+        if (type == EquipmentType.Head && Head != null) {
             AddItem(Head);
             PlayerStats.instance.statModifiers.Remove(Head.stats);
             Head = null;
         }
-        else if (type == "Chest" && Chest != null) {
+        else if (type == EquipmentType.Chest && Chest != null) {
             PlayerStats.instance.statModifiers.Remove(Chest.stats);
             AddItem(Chest);
             Chest = null;
         }
-        else if (type == "Legs" && Legs != null) {
+        else if (type == EquipmentType.Legs && Legs != null) {
             PlayerStats.instance.statModifiers.Remove(Legs.stats);
             AddItem(Legs);
             Legs = null;
         }
-        else if (type == "Hands" && Hands != null) {
+        else if (type == EquipmentType.Hands && Hands != null) {
             PlayerStats.instance.statModifiers.Remove(Hands.stats);
             AddItem(Hands);
             Hands = null;
         }
-        else if (type == "WeaponSlot1" && WeaponUpgradeSlot1 != null) {
-            PlayerStats.instance.statModifiers.Remove(WeaponUpgradeSlot1.stats);
-            AddItem(WeaponUpgradeSlot1);
-            WeaponUpgradeSlot1 = null;
+        else if (type == EquipmentType.Upgrade1 && Upgrade1 != null) {
+            PlayerStats.instance.statModifiers.Remove(Upgrade1.stats);
+            AddItem(Upgrade1);
+            Upgrade1 = null;
         }
-        else if (type == "WeaponSlot2" && WeaponUpgradeSlot2 != null) {
-            PlayerStats.instance.statModifiers.Remove(WeaponUpgradeSlot2.stats);
-            AddItem(WeaponUpgradeSlot2);
-            WeaponUpgradeSlot2 = null;
+        else if (type == EquipmentType.Upgrade2 && Upgrade2 != null) {
+            PlayerStats.instance.statModifiers.Remove(Upgrade2.stats);
+            AddItem(Upgrade2);
+            Upgrade2 = null;
         }
         DrawInventory();
         UIManager.instance.ClearEquipmentSlot(type);
@@ -234,7 +234,7 @@ public class InventoryManager : MonoBehaviour {
     }
 
     public void ShowTooltip(Item item) {
-        if (item.GetType() == typeof(Weapon)) {
+        if (item is Weapon) {
             Weapon weapon = (Weapon)item;
             uiManager.SetItemInfo(
                     "<b><i>" + weapon.name + "</i></b>      " +
@@ -246,7 +246,7 @@ public class InventoryManager : MonoBehaviour {
                     "Agility: " + weapon.stats.agility.ToString()
                 );
         }
-        else if (item.GetType() == typeof(Armor)) {
+        else if (item is Armor) {
             Armor armor = (Armor)item;
             uiManager.SetItemInfo(
                     "<b><i>" + armor.slot + " " + item.name + "</i></b>\n" +
@@ -256,7 +256,68 @@ public class InventoryManager : MonoBehaviour {
                     "Agility: " + armor.stats.agility.ToString()
                 );
         }
+    }
 
+    public void ShowTooltip(EquipmentType type) {
+        if (type == EquipmentType.Head && Head != null) {
+            uiManager.SetItemInfo(
+                    "<b><i>" + Head.slot + " " + Head.name + "</i></b>\n" +
+                    "Stamina: " + Head.stats.stamina.ToString() + "\n" +
+                    "Strength: " + Head.stats.strength.ToString() + "\n" +
+                    "Intelligence: " + Head.stats.intellect.ToString() + "\n" +
+                    "Agility: " + Head.stats.agility.ToString()
+                );
+        }
+        else if (type == EquipmentType.Chest && Chest != null) {
+            uiManager.SetItemInfo(
+                    "<b><i>" + Chest.slot + " " + Chest.name + "</i></b>\n" +
+                    "Stamina: " + Chest.stats.stamina.ToString() + "\n" +
+                    "Strength: " + Chest.stats.strength.ToString() + "\n" +
+                    "Intelligence: " + Chest.stats.intellect.ToString() + "\n" +
+                    "Agility: " + Chest.stats.agility.ToString()
+                );
+        }
+        else if (type == EquipmentType.Legs && Legs != null) {
+            uiManager.SetItemInfo(
+                    "<b><i>" + Legs.slot + " " + Legs.name + "</i></b>\n" +
+                    "Stamina: " + Legs.stats.stamina.ToString() + "\n" +
+                    "Strength: " + Legs.stats.strength.ToString() + "\n" +
+                    "Intelligence: " + Legs.stats.intellect.ToString() + "\n" +
+                    "Agility: " + Legs.stats.agility.ToString()
+                );
+        }
+        else if (type == EquipmentType.Hands && Hands != null) {
+            uiManager.SetItemInfo(
+                    "<b><i>" + Hands.slot + " " + Hands.name + "</i></b>\n" +
+                    "Stamina: " + Hands.stats.stamina.ToString() + "\n" +
+                    "Strength: " + Hands.stats.strength.ToString() + "\n" +
+                    "Intelligence: " + Hands.stats.intellect.ToString() + "\n" +
+                    "Agility: " + Hands.stats.agility.ToString()
+                );
+        }
+        else if (type == EquipmentType.Upgrade1 && Upgrade1 != null) {
+            uiManager.SetItemInfo(
+                    "<b><i>" + Upgrade1.name + "</i></b>      " +
+                    Upgrade1.slot + "\n" +
+                    "DamageMultiplier: " + Upgrade1.DamageMultiplier.ToString() + "\n" +
+                    "Stamina: " + Upgrade1.stats.stamina.ToString() + "\n" +
+                    "Strength: " + Upgrade1.stats.strength.ToString() + "\n" +
+                    "Intelligence: " + Upgrade1.stats.intellect.ToString() + "\n" +
+                    "Agility: " + Upgrade1.stats.agility.ToString()
+                );
+        }
+        else if (type == EquipmentType.Upgrade2 && Upgrade2 != null) {
+            uiManager.SetItemInfo(
+                    "<b><i>" + Upgrade2.name + "</i></b>      " +
+                    Upgrade2.slot + "\n" +
+                    "DamageMultiplier: " + Upgrade2.DamageMultiplier.ToString() + "\n" +
+                    "Stamina: " + Upgrade2.stats.stamina.ToString() + "\n" +
+                    "Strength: " + Upgrade2.stats.strength.ToString() + "\n" +
+                    "Intelligence: " + Upgrade2.stats.intellect.ToString() + "\n" +
+                    "Agility: " + Upgrade2.stats.agility.ToString()
+                );
+        }
+        DrawInventory();
     }
 
     public void AddItem(Item item) {
@@ -277,7 +338,14 @@ public class InventoryManager : MonoBehaviour {
             GameObject newButton = Instantiate(itemButton) as GameObject;
             ItemButton button = newButton.GetComponent<ItemButton>();
             button.item = item;
-            button.nameLable.text = item.name.ToString();
+            if (item is Armor) {
+                Armor armor = (Armor)item;
+                button.nameLable.text = armor.slot + " " + item.name.ToString();
+
+            }
+            else {
+                button.nameLable.text = item.name.ToString();
+            }
             button.durability.text = "Durability: " + item.durability.ToString() + " / " + item.maxDurability.ToString();
             button.icon.sprite = item.sprite;
             newButton.transform.SetParent(contentPanel);

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public interface ISpell {
     string Name { get; set; }
@@ -15,5 +14,4 @@ public interface ISpell {
     bool OnCoolDown { get; set; }
 
     void CastSpell();
-    IEnumerator UpdateSpell();
 }

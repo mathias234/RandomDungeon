@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System;
 
 public class Spell : ISpell {
@@ -18,7 +17,6 @@ public class Spell : ISpell {
     public Spell() {
         Name = "No Name";
         Description = "No Description";
-        Effect = new GameObject();
         LineOfSight = true;
 
         BaseCoolDownTime = 2.0f;
@@ -27,11 +25,13 @@ public class Spell : ISpell {
     }
 
     public void CastSpell() {
-        LifeTime = BaseLifeTime;
+        LifeTime = 0;
         if (this is Bolt) {
             // Do something
             Bolt bolt = (Bolt)this;
             Debug.Log("Casting Bolt: " + bolt.Name);
+            GameObject spell = MonoBehaviour.Instantiate(Effect);
+            spell.GetComponent<UpdateBolt>().bolt = bolt;
         }
         else if (this is Buff) {
             // Do Something
@@ -39,33 +39,6 @@ public class Spell : ISpell {
         }
         else if (this is Spell) {
             // it shouldnt come to this.
-        }
-    }
-
-    /// <summary>
-    /// Used to keep track of the spell after its been cast counting down spell cooldowns and such
-    /// </summary>
-    public IEnumerator UpdateSpell() {
-        while (true) {
-            if (LifeTime <= 0) {
-                yield break;
-            }
-
-            LifeTime -= Time.deltaTime;
-
-            if (this is Bolt) {
-                // Do something
-                Bolt bolt = (Bolt)this;
-                Debug.Log("Updating Bolt: " + bolt.Name);
-            }
-            else if (this is Buff) {
-                // Do Something
-                Buff buff = (Buff)this;
-            }
-            else if (this is Spell) {
-                // it shouldnt come to this.
-            }
-            yield return new WaitForSeconds(0);
         }
     }
 
