@@ -20,6 +20,8 @@ namespace RandomDungeon {
 
         public static UIManager instance;
 
+        public Sprite NoItem;
+
         public void Awake() {
             instance = this;
         }
@@ -101,22 +103,22 @@ namespace RandomDungeon {
         // clear this spot and add it to the inventory
         public void ClearEquipmentSlot(EquipmentType type) {
             if (type == EquipmentType.Head) {
-                Head.FindChild("Foreground").GetComponent<Image>().sprite = new Sprite();
+                Head.FindChild("Foreground").GetComponent<Image>().sprite = NoItem;
             }
             else if (type == EquipmentType.Chest) {
-                Chest.FindChild("Foreground").GetComponent<Image>().sprite = new Sprite();
+                Chest.FindChild("Foreground").GetComponent<Image>().sprite = NoItem;
             }
             else if (type == EquipmentType.Legs) {
-                Legs.FindChild("Foreground").GetComponent<Image>().sprite = new Sprite();
+                Legs.FindChild("Foreground").GetComponent<Image>().sprite = NoItem;
             }
             else if (type == EquipmentType.Hands) {
-                Hands.FindChild("Foreground").GetComponent<Image>().sprite = new Sprite();
+                Hands.FindChild("Foreground").GetComponent<Image>().sprite = NoItem;
             }
             else if (type == EquipmentType.Upgrade1) {
-                Upgrade1.FindChild("Foreground").GetComponent<Image>().sprite = new Sprite();
+                Upgrade1.FindChild("Foreground").GetComponent<Image>().sprite = NoItem;
             }
             else if (type == EquipmentType.Upgrade2) {
-                Upgrade2.FindChild("Foreground").GetComponent<Image>().sprite = new Sprite();
+                Upgrade2.FindChild("Foreground").GetComponent<Image>().sprite = NoItem;
             }
 
         }

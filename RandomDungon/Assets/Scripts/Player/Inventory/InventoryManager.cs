@@ -320,6 +320,9 @@ namespace RandomDungeon.Items {
                         "Agility: " + Upgrade2.stats.agility.ToString()
                     );
             }
+            else if (type == EquipmentType.None) {
+                uiManager.SetItemInfo("");
+            }
             DrawInventory();
         }
 

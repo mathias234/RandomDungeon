@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public enum EquipmentType {
+    None,
     Head,
     Chest,
     Legs,
@@ -12,16 +12,21 @@ public enum EquipmentType {
 }
 
 namespace RandomDungeon.Items {
-    public class EquipmentButton : MonoBehaviour, IPointerClickHandler {
+    public class EquipmentButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler {
         public EquipmentType type;
 
         public void OnPointerClick(PointerEventData eventData) {
             if (eventData.button == PointerEventData.InputButton.Left) {
-                InventoryManager.instance.ShowTooltip(type);
-            }
-            else if (eventData.button == PointerEventData.InputButton.Right) {
                 InventoryManager.instance.EquipmentClicked(type);
             }
+        }
+
+        public void OnPointerEnter(PointerEventData eventData) {
+            InventoryManager.instance.ShowTooltip(type);
+        }
+
+        public void OnPointerExit(PointerEventData eventData) {
+            InventoryManager.instance.ShowTooltip(EquipmentType.None);
         }
     }
 }
