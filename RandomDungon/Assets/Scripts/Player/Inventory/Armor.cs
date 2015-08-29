@@ -1,26 +1,28 @@
-﻿public class Armor : Item {
-    public enum ArmorSlots {
-        Headguard,
-        Chestpiece,
-        Legs,
-        Hands,
-    }
+﻿namespace RandomDungeon.Items {
+    public class Armor : Item {
+        public enum ArmorSlots {
+            Headguard,
+            Chestpiece,
+            Legs,
+            Hands,
+        }
 
-    public ArmorSlots slot;
+        public ArmorSlots slot;
 
-    public Armor() {
-        slot = ArmorSlots.Hands;
-    }
+        public Armor() {
+            slot = ArmorSlots.Hands;
+        }
 
-    public Armor(string name, int maxDurability, Stats stats, UnityEngine.Sprite sprite, ArmorSlots slot) {
-        this.name = name;
-        this.maxDurability = maxDurability;
-        this.stats = stats;
-        this.sprite = sprite;
+        public Armor(string name, int maxDurability, Stats stats, UnityEngine.Sprite sprite, ArmorSlots slot) {
+            this.name = name;
+            this.maxDurability = maxDurability;
+            this.stats = stats;
+            this.sprite = sprite;
 
-        this.slot = slot;
+            this.slot = slot;
 
-        // Durability should always be initialized to the max durability.
-        durability = maxDurability;
+            // Durability should always be initialized to the max durability.
+            durability = maxDurability;
+        }
     }
 }
