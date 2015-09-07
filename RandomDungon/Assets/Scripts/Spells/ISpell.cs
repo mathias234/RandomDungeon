@@ -13,6 +13,10 @@ namespace RandomDungeon.Spells {
         float CoolDownTimer { get; set; }
         bool OnCoolDown { get; set; }
 
+        float Mana { get; set; }
+        Sprite Icon { get; set; }
+
+
         void CastSpell();
     }
 }

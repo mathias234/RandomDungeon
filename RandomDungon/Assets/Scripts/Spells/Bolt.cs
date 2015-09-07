@@ -2,9 +2,9 @@
 namespace RandomDungeon.Spells {
     [Serializable]
     public class Bolt : Spell, IBolt {
-        float _damageValue;
-        float _damageVariance;
-        float _range;
+        private float _damageValue;
+        private float _damageVariance;
+        private float _range;
 
         public float DamageValue {
             get {
@@ -25,6 +25,7 @@ namespace RandomDungeon.Spells {
                 _damageVariance = value;
             }
         }
+
 
         public float Range {
             get {

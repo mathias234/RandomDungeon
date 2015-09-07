@@ -39,7 +39,7 @@ namespace RandomDungeon.Spells {
             }
 
             set {
-                BuffDuration = value;
+                _buffDuration = value;
             }
         }
     }

@@ -14,6 +14,11 @@ namespace RandomDungeon.Spells {
         private float _coolDownTimer;
         private bool _onCoolDown;
 
+        private float _mana;
+
+        private Sprite _icon;
+
+
         public Spell() {
             Name = "No Name";
             Description = "No Description";
@@ -36,6 +41,7 @@ namespace RandomDungeon.Spells {
             else if (this is Buff) {
                 // Do Something
                 Buff buff = (Buff)this;
+                Debug.Log("WHAT TO DO!?!?!?!?!? I DONT KNOW ANYHING ABOUT THIS BUFF?");
             }
             else if (this is Spell) {
                 // it shouldnt come to this.
@@ -132,5 +138,24 @@ namespace RandomDungeon.Spells {
             }
         }
 
+        public float Mana {
+            get {
+                return _mana;
+            }
+
+            set {
+                _mana = value;
+            }
+        }
+
+        public Sprite Icon {
+            get {
+                return _icon;
+            }
+
+            set {
+                _icon = value;
+            }
+        }
     }
 }
