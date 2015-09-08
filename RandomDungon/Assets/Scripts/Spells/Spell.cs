@@ -39,12 +39,10 @@ namespace RandomDungeon.Spells {
                 spell.GetComponent<UpdateBolt>().bolt = bolt;
             }
             else if (this is Buff) {
-                // Do Something
-                Buff buff = (Buff)this;
-                Debug.Log("WHAT TO DO!?!?!?!?!? I DONT KNOW ANYHING ABOUT THIS BUFF?");
+
             }
             else if (this is Spell) {
-                // it shouldnt come to this.
+
             }
         }
 

@@ -37,7 +37,7 @@ namespace RandomDungeon {
         void SetupPlayerUI() {
             crosshair = GameObject.Find("Crosshair");
             playerPanel = GameObject.Find("PlayerPanel");
-            controller = gameObject.GetComponent<RigidbodyFirstPersonController>();
+            controller = GameObject.FindWithTag("Player").GetComponent<RigidbodyFirstPersonController>();
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = false;

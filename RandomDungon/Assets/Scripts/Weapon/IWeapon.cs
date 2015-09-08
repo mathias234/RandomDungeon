@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using RandomDungeon.Entity;
 namespace RandomDungeon {
     public interface IWeapon {

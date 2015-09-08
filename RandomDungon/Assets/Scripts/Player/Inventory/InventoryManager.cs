@@ -35,8 +35,7 @@ namespace RandomDungeon.Items {
         }
 
         void Start() {
-            for (int x = 0; x < 25; x++)
-                AddItem(GenerateRandomItem());
+
 
             DrawInventory();
         }

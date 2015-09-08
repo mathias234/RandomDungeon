@@ -6,12 +6,9 @@ using System.Collections.Generic;
 /// </summary>
 namespace RandomDungeon.Spells {
     public class PlayerSpellAttack : MonoBehaviour {
-
-
         // Use this for initialization
         void Start() {
-            SpellManager.instance.spellBook.Add(SpellGenerator.Firebolt());
-            SpellManager.instance.spellBook.Add(SpellGenerator.Frostbolt());
+
         }
 
         // Update is called once per frame

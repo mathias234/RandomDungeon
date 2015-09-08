@@ -15,10 +15,13 @@ namespace RandomDungeon.Spells {
 
         public void Awake() {
             instance = this;
+            spellBook.Add(SpellGenerator.Firebolt());
+            spellBook.Add(SpellGenerator.Frostbolt());
         }
         public void Update() {
             if (!hasUpdated) {
                 DrawSpellBook();
+                selectedSpell = spellBook[0];
                 hasUpdated = true;
             }
         }

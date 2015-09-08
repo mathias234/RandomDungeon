@@ -22,13 +22,20 @@ namespace RandomDungeon.Spells {
         }
 
         public void QustionRemoval() {
-            ModalPanel.Instance().Choice("Are you sure you want to delete this spell", new UnityAction(RemoveSpell), new UnityAction(CancelRemoval));
+            if (SpellManager.instance.spellBook.Count > 1) {
+                ModalPanel.Instance().Choice("Are you sure you want to delete this spell", new UnityAction(RemoveSpell), new UnityAction(CancelRemoval));
+            }
+            else {
+                ModalPanel.Instance().Choice("You need atleast one spell in your spellbook");
 
+            }
         }
 
         public void RemoveSpell() {
             SpellManager.instance.spellBook.Remove(spell);
             SpellManager.instance.DrawSpellBook();
+            SpellManager.instance.selectedSpell = SpellManager.instance.spellBook[0];
+
         }
 
         public void CancelRemoval() {

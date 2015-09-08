@@ -41,6 +41,18 @@ namespace RandomDungeon.UI {
             cancelButton.gameObject.SetActive(true);
         }
 
+        public void Choice(string question) {
+            modalPanelObject.SetActive(true);
+
+            cancelButton.onClick.AddListener(ClosePanel);
+
+            this.question.text = question;
+
+            this.iconImage.gameObject.SetActive(false);
+            yesButton.gameObject.SetActive(false);
+            cancelButton.gameObject.SetActive(true);
+        }
+
 
         void ClosePanel() {
             modalPanelObject.SetActive(false);

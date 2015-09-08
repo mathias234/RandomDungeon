@@ -3,11 +3,13 @@ using System.Collections;
 using RandomDungeon.Entity;
 
 namespace RandomDungeon {
-    public class Gun : MonoBehaviour, IWeapon {
-        public float timeSinceLastAttack = 1.7f;
-        public float damage;
+    public class Gun : Weapon {
+        public void Awake() {
+            timeSinceLastAttack = 1.7f;
+            damage = 20f;
+        }
 
-        public void Update() {
+        public override void Update() {
             timeSinceLastAttack -= Time.deltaTime;
 
             // Base Damage
@@ -20,19 +22,14 @@ namespace RandomDungeon {
 
         }
 
-        public void DoAttack(Enemy target) {
+        public override void DoAttack(Enemy target) {
             if (timeSinceLastAttack <= 0) {
                 // Start animation
                 gameObject.GetComponent<Animator>().SetTrigger("StartRecoil");
                 gameObject.GetComponent<AudioSource>().Play();
-                target.TakeDamage(damage);
+                if (target != null)
+                    target.TakeDamage(damage);
                 timeSinceLastAttack = 1.7f;
-            }
-        }
-
-        public GameObject myGameObject {
-            get {
-                return gameObject;
             }
         }
     }

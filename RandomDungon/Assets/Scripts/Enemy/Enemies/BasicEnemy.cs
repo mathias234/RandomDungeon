@@ -12,9 +12,6 @@ namespace RandomDungeon.Entity {
 
             MaxHealth = thisLevelHealth;
             Health = MaxHealth;
-
-            Mana = 100;
-            MaxMana = 100;
         }
 
         public override void Attack() {

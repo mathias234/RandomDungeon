@@ -5,8 +5,6 @@ namespace RandomDungeon.Entity {
         // Base Stats - Every enemy has them.
         public float Health;
         public float MaxHealth;
-        public float Mana;
-        public float MaxMana;
 
         // Every enemy should be aware of its own AI and the player
         public PlayerStats player;
@@ -16,6 +14,12 @@ namespace RandomDungeon.Entity {
 
         public static int healthIncreasePercentage = 20; // How much the health will be increased  with each level
         public static float thisLevelHealth = 100;
+
+        public RectTransform health;
+
+        void Awake() {
+            health = transform.Find("Canvas/HealthBar/HealthBar-Filler").GetComponent<RectTransform>();
+        }
 
         void Update() {
             if (player == null) {
@@ -31,11 +35,11 @@ namespace RandomDungeon.Entity {
                 return;
             }
 
-
-
-            HandleDeath();
             Attack();
+            HandleDeath();
+            UpdateHealthbar();
         }
+
         /// This function needs to be overwritten as there is no "Default" attack sequence
         public virtual void Attack() {
         }
@@ -43,6 +47,7 @@ namespace RandomDungeon.Entity {
         public virtual void TakeDamage(float amount) {
             Health -= amount;
         }
+
         /// the default death seqence is just to be removed but this can be overwritten for more advance death
         public virtual void HandleDeath() {
 
@@ -50,6 +55,11 @@ namespace RandomDungeon.Entity {
                 Instantiate(lootItem, transform.position, transform.rotation);
                 Destroy(gameObject);
             }
+        }
+
+        public virtual void UpdateHealthbar() {
+            float normalizedHealth = ((float)Health - 0) / ((float)MaxHealth - 0) * 20;
+            health.sizeDelta = new Vector2(normalizedHealth, health.sizeDelta.y);
         }
     }
 }
